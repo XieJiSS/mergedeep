@@ -3,7 +3,7 @@ from collections.abc import Mapping
 from copy import deepcopy
 from enum import Enum
 from functools import reduce, partial
-from typing import MutableMapping
+from typing import Any, MutableMapping
 
 
 class Strategy(Enum):
@@ -72,6 +72,9 @@ def _is_recursive_merge(a, b):
 
 
 def _deepmerge(dst, src, strategy=Strategy.REPLACE):
+    if src is None:
+        return dst
+
     for key in src:
         if key in dst:
             if _is_recursive_merge(dst[key], src[key]):
@@ -88,7 +91,7 @@ def _deepmerge(dst, src, strategy=Strategy.REPLACE):
     return dst
 
 
-def merge(destination: MutableMapping, *sources: Mapping, strategy: Strategy = Strategy.REPLACE) -> MutableMapping:
+def merge(destination: MutableMapping[str, Any], *sources: Mapping[str, Any], strategy: Strategy = Strategy.REPLACE) -> MutableMapping[str, Any]:
     """
     A deep merge function for 🐍.
 
