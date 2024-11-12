@@ -1,0 +1,22 @@
+name: Build and upload python package to PyPI
+
+on:
+  workflow_dispatch
+
+jobs:
+  release-pypi:
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Build package and upload from docker (Linux)
+      if: runner.os == 'Linux'
+      run: |
+        docker run --rm -v "${PWD}:/opt/runch-mergedeep" \
+          -e TWINE_USERNAME=__token__ \
+          -e TWINE_PASSWORD=${{ secrets.PYPI_TOKEN }} \
+          ubuntu:22.04 /bin/bash /opt/runch-mergedeep/scripts/release-pypi.sh
