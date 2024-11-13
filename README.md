@@ -14,13 +14,13 @@ A deep merge function for 🐍.
 ## Installation
 
 ```bash
-$ pip install mergedeep
+$ pip install runch-mergedeep
 ```
 
 ## Usage
 
 ```text
-merge(destination: MutableMapping, *sources: Mapping, strategy: Strategy = Strategy.REPLACE) -> MutableMapping
+merge(destination: MutableMapping[str, Any], *sources: Mapping[str, Any], strategy: Strategy = Strategy.REPLACE) -> MutableMapping[str, Any]
 ```
 
 Deep merge without mutating the source dicts.
